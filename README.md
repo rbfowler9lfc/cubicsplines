@@ -1,3 +1,14 @@
+Notes
+=====
+
+Original code by George MacKerron https://github.com/jawj
+Typescript declarations by Claudio Schilling https://github.com/rbfowler9lfc
+
+As of 2021, Coffeescript is basically dead on the water. Running `npm install https://github.com/rbfowler9lfc/cubicsplines.git` will compile the source into JS, and I've added a Typescript declaration file, so you'll be able to import it in your code like
+```ts
+import { MonotonicCubicSpline, CubicSpline } from "cubicsplines"
+``` 
+
 cubicsplines
 ============
 

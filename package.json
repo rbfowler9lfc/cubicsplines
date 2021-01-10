@@ -1,0 +1,27 @@
+{
+  "name": "cubicsplines",
+  "version": "0.0.1",
+  "description": "Three kinds of cublic spline calculation in TypeScript: natural, clamped and monotonic.",
+  "main": "cubicsplines.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npx -p coffeescript coffee --compile --inline-map --output cubicsplines.js cubicsplines.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbfowler9lfc/cubicsplines.git"
+  },
+  "keywords": [
+    "spline",
+    "cubic",
+    "monotonic",
+    "clamped",
+    "natural"
+  ],
+  "author": "George MacKerron",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rbfowler9lfc/cubicsplines/issues"
+  },
+  "homepage": "https://github.com/rbfowler9lfc/cubicsplines#readme"
+}
