@@ -1,20 +1,20 @@
 class MonotonicCubicSpline
 
-# inspired by: 
+# inspired by:
 # http://sourceforge.net/mailarchive/forum.php?thread_name=
 # EC90C5C6-C982-4F49-8D46-A64F270C5247%40gmail.com&forum_name=matplotlib-users
 # (easier to read at http://old.nabble.com/%22Piecewise-Cubic-Hermite-Interpolating-
 # Polynomial%22-in-python-td25204843.html)
- 
+
 # with help from:
-# F N Fritsch & R E Carlson (1980) 'Monotone Piecewise Cubic Interpolation', 
+# F N Fritsch & R E Carlson (1980) 'Monotone Piecewise Cubic Interpolation',
 #   SIAM Journal of Numerical Analysis 17(2), 238 - 246.
 # http://en.wikipedia.org/wiki/Monotone_cubic_interpolation
 # http://en.wikipedia.org/wiki/Cubic_Hermite_spline
 
 # note: there may be glitches that cause non-monotonicity on rare occasions
 # (best I can tell, these are in the original sources, not my translation)
- 
+
   constructor: (x, y) ->
     n = x.length
     delta = []; m = []; alpha = []; beta = []; dist = []; tau = []
@@ -30,7 +30,7 @@ class MonotonicCubicSpline
       m[i] = m[i + 1] = 0
     for i in [0...(n - 1)]
       alpha[i] = m[i] / delta[i]
-      beta[i]  = m[i + 1] / delta[i] 
+      beta[i]  = m[i + 1] / delta[i]
       dist[i]  = Math.pow(alpha[i], 2) + Math.pow(beta[i], 2)
       tau[i]   = 3 / Math.sqrt(dist[i])
     to_fix = []
@@ -42,7 +42,7 @@ class MonotonicCubicSpline
     @x = x[0...n]  # copy
     @y = y[0...n]  # copy
     @m = m
- 
+
   interpolate: (x) ->
     for i in [(@x.length - 2)..0]
       break if @x[i] <= x
@@ -54,18 +54,18 @@ class MonotonicCubicSpline
     h10 =      t3 - 2 * t2 + t
     h01 = -2 * t3 + 3 * t2
     h11 =      t3  -    t2
-    y = h00 * @y[i] + 
-        h10 * h * @m[i] + 
-        h01 * @y[i + 1] + 
+    y = h00 * @y[i] +
+        h10 * h * @m[i] +
+        h01 * @y[i + 1] +
         h11 * h * @m[i + 1]
     y
- 
- 
+
+
 class CubicSpline  # natural or clamped
 
 # inspired by:
 # http://www.michonline.com/ryan/csc/m510/splinepresent.html
- 
+
   constructor: (x, a, d0, dn) ->
     return unless x? and a?
     clamped = d0? and dn?
@@ -109,7 +109,7 @@ class CubicSpline  # natural or clamped
     @b = b
     @c = c[0...n]
     @d = d
- 
+
   derivative: ->
     s = new this.constructor()
     s.x = @x[0...@x.length]  # copy
@@ -118,13 +118,15 @@ class CubicSpline  # natural or clamped
     s.c = 3 * d for d in @d
     s.d = 0 for x in [0...@d.length]
     s
- 
+
   interpolate: (x) ->
     for i in [(@x.length - 1)..0]
       break if @x[i] <= x
     deltaX = x - @x[i]
-    y = @a[i] + 
-        @b[i] * deltaX + 
-        @c[i] * Math.pow(deltaX, 2) + 
+    y = @a[i] +
+        @b[i] * deltaX +
+        @c[i] * Math.pow(deltaX, 2) +
         @d[i] * Math.pow(deltaX, 3)
     y
+
+module.exports = { CubicSpline, MonotonicCubicSpline }
